@@ -1,0 +1,4 @@
+<?php
+    $myName = 'MAC';
+    
+?>
