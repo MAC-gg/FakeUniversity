@@ -23,15 +23,34 @@
                 </div>
                 <?php } /* END if child page */ ?>
                 
-                <!--
-                <div class="page-links">
-                    <h2 class="page-links__title"><a href="#">About Us</a></h2>
-                    <ul class="min-list">
-                        <li class="current_page_item"><a href="#">Our History</a></li>
-                        <li><a href="#">Our Goals</a></li>
-                    </ul>
-                </div>
-                -->
+                <?php 
+                    $hasChildren = get_pages(array(
+                        'child_of' => get_the_ID()
+                    ));
+
+                    if( $parentPageID /* has parent */ || $hasChildren ) { /* if parent or child page */ ?>
+                        <!-- SIDE SUB MENU -->
+                        <div class="page-links">
+                            <h2 class="page-links__title"><a href="<?php echo get_permalink($parentPageID); ?>"><?php echo get_the_title($parentPageID); ?></a></h2>
+                            <ul class="min-list">
+                                <?php 
+                                    if($parentPageID) {
+                                        $childrenOf = $parentPageID;
+                                    } else {
+                                        $childrenOf = get_the_ID();
+                                    }
+
+                                    /* details of fn used below : https://developer.wordpress.org/reference/functions/wp_list_pages/ */
+                                    wp_list_pages(array(
+                                        'title_li' => NULL,
+                                        'child_of' => $childrenOf,
+                                        'sort_column' => 'menu_order'
+                                    ));
+                                ?>
+                            </ul>
+                        </div>
+                        <!-- END SIDE SUB MENU -->
+                <?php } /* END if parent or child page */ ?>
 
                 <div class="generic-content">
                     <p><?php the_content(); ?>

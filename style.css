@@ -969,7 +969,7 @@ body.login {
   }
   }
 @media (min-width: 960px) {
-.site-header__menu-trigger {
+.fa.site-header__menu-trigger {
       display: none
   }
   }
