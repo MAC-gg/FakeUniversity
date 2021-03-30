@@ -33,9 +33,15 @@
 
     function university_adjust_queries($query) {
         // make changes to the default queries that WP runs
-        if(!is_admin()) { // NOT wp-admin
-            if($query->is_main_query()) { // NO custom queries
-                if(is_post_type_archive('event')) { // EVENT post type -- query on /events
+        
+        // NOT wp-admin
+        if(!is_admin()) {
+
+            // NO custom queries
+            if($query->is_main_query()) {
+
+                // EVENT post type -- query on /events
+                if(is_post_type_archive('event')) {
                     $today = date('Ymd');
                     $query->set('meta_key', 'event_date');
                     $query->set('orderby', 'meta_value_num');
@@ -48,6 +54,13 @@
                             'type' => 'numeric'
                         )
                     ));
+                }
+                
+                // PROGRAM post type -- query on /programs
+                if(is_post_type_archive('program')) {
+                    $query->set('orderby', 'title');
+                    $query->set('order', 'ASC');
+                    $query->set('posts_per_page', -1);
                 }
             }
         }
